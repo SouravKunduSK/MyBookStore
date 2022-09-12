@@ -1,0 +1,85 @@
+﻿
+
+@model List<MyBookStore.Models.Book>
+@{
+    ViewBag.Title = "BookList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="#">Lended Books</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="#">Add new book</a>
+            </li>
+            <li class="breadcrumb-item active">All Books</li>
+
+        </ol>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-book-open"></i>
+                Select books from the list
+
+
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-hover table-bordered table-striped table" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+
+                                <th>Serial No.</th>
+                                <th>Picture</th>
+                                <th>Book Name</th>
+                                <th>Author Name</th>
+                                <th>Category</th>
+                                <th>Buying Date</th>
+                                <th>Reading Status</th>
+                                <th>Book Status</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                //int count = 1;
+                                <tr>
+                                    <td>@(Model.IndexOf(item)+1)</td>
+                                    <td><img src="@Url.Content(item.Photo)" style="width:100px; height:67px;" /></td>
+                                    <td>@item.BookName</td>
+                                    <td>@item.Author.AuthorName</td>
+                                    <td>@item.Category.CategoryName</td>
+                                    <td>@item.BuyingDate.GetValueOrDefault().ToLongDateString()</td>
+
+                                    <td>@item.Reading.ReadingStatus</td>
+                                    <td>@item.BookStatu.Status</td>
+
+
+                                    <td>
+
+                                        <a href="@Url.Action("Create", "Lend", new { id = item.BookId})" class="btn btn-outline-success ">Select</a>
+                                        @*<a href="@Url.Action("Delete", "Book", new { id = item.BookId})" class="btn btn-outline-danger">Delete</a><br />*@
+                                        @*<a href="@Url.Action("Edit", "Lend", new { id = item.BookId})" class="btn btn-outline-warning">Lend</a>*@
+                                    </td>
+
+
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,84 @@
+﻿
+
+
+@model MyBookStore.Models.Book
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Add Running Books</a>
+        </li>
+
+        <li class="breadcrumb-item active">Edit Books Detail</li>
+
+
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-book-reader"></i>
+            Edit  Books Detail
+
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Create", "RunBook", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(m => m.BookId)
+                @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.Photo)
+                @Html.HiddenFor(m => m.BookName)
+                @Html.HiddenFor(m => m.AuthorId)
+                @Html.HiddenFor(m => m.CategoryId)
+                @Html.HiddenFor(m => m.BookStatusId)
+                @Html.HiddenFor(m => m.BuyingDate)
+                @Html.HiddenFor(m => m.StartDate)
+                @Html.HiddenFor(m => m.EndDate)
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <span style="color:orangered">Change Reading status to "Running".....</span>
+                    </div>
+                </div>
+            </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        @if (ViewBag.ReadList != null)
+                        {
+                            <div class="col-md-10">
+
+                                <h6>Reading Status<span style="color: orangered">*</span></h6>
+                                @Html.DropDownListFor(model => model.ReadingId, ViewBag.ReadList as SelectList, "-- Select Status ---", new { @class = "form-control" })
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <a onclick="window.history.back();" class="btn btn-outline-danger">Cancel</a>
+                            <input type="submit" class="btn btn-outline-primary" value="Update" />
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+
+
+
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,123 @@
+﻿
+@model MyBookStore.Models.Book
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item ">Lended Books</li>
+        <li class="breadcrumb-item active">Add Lended Books</li>
+
+
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-parachute-box"></i>
+            Add Lended Books Details
+
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Create", "Lend", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(m => m.BookId)
+                @Html.HiddenFor(m => m.BookName)
+                @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.Photo)
+                @Html.HiddenFor(m => m.AuthorId)
+                @Html.HiddenFor(m => m.CategoryId)
+                @Html.HiddenFor(m => m.BuyingDate)
+                @Html.HiddenFor(m => m.ReadingId)
+                <h6>@TempData["msg"]</h6>
+                @*<div class="col-md-6">
+                <div class="form-group">
+                    @if (ViewBag.BookList != null)
+                    {
+                        <div class="col-md-10">
+                            <h6>Book Name<span style="color: orangered">*</span></h6>
+                            @Html.DropDownListFor(model => model.BookId, ViewBag.BookList as SelectList, "-- Select Book ---", new { @class = "form-control" })
+                        </div>
+                    }
+                </div>
+            </div>*@
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                           <span style="color:orangered">Change Lend Status to Lended...</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <h6>Book Name<span style="color: orangered">*</span></h6>
+                            <strong>@Html.DisplayFor(model => model.BookName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Book Name", required = "required", autofocus = "autofocus" } })</strong>
+                            @Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @if (ViewBag.SatList != null)
+                        {
+                            <div class="col-md-10">
+                                <h6>Lend Status<span style="color: orangered">*</span></h6>
+                                @Html.DropDownListFor(model => model.BookStatusId, ViewBag.SatList as SelectList, "-- Select Status ---", new { @class = "form-control" })
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <h6>Borrower Name<span style="color: orangered">*</span></h6>
+                            @Html.EditorFor(model => model.BorrowerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Borrower Name", required = "required", autofocus = "autofocus" } })
+                            @Html.ValidationMessageFor(model => model.BorrowerName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <h6>Lending Date<span style="color: orangered">*</span></h6>
+
+                            <input class="form-control" asp-for="BorrowDate" type="date" name="BorrowDate" />
+                            @Html.ValidationMessageFor(model => model.BorrowDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                        <div class="col-md-10">
+
+                            <a onclick="window.history.back();" class="btn btn-outline-danger">Cancel</a>
+                            <input type="submit" class="btn btn-outline-success" value="Save" />
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+

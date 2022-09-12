@@ -1,0 +1,98 @@
+﻿@model MyBookStore.Models.User
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">User</a>
+        </li>
+        @*<li class="breadcrumb-item ">All Authors</li>*@
+        <li class="breadcrumb-item active">Edit User Details</li>
+
+
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-book-open"></i>
+            Edit User Details
+
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.RoleId)
+                @Html.HiddenFor(m => m.FirstName)
+                @Html.HiddenFor(m => m.LastName)
+                @Html.HiddenFor(m => m.Username)
+                @Html.HiddenFor(m => m.Email)
+                @Html.HiddenFor(m => m.Password)
+                @Html.HiddenFor(m => m.HashPassword)
+                @Html.HiddenFor(m => m.RegDate)
+
+
+                <div class="col-md-6">
+                    <h3><strong>Profile Picture:</strong></h3><hr />
+                    <div class="form-group">
+                        @Html.HiddenFor(m => m.UserId)
+                    </div>
+
+                    <div class="col-md-12">
+
+                        <div class="row">
+
+                            <div class="col-4">
+                                <h6>Current Image</h6>
+                                <img width="150" src="@Url.Content(Model.Photo)" style="height:200px">
+                            </div>
+
+
+                            <div class="col-4">
+                                <h6>New Image:</h6>
+                                <img src="" id="output" style="height:200px" width="150" altsrc="No Image" />
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <h4>Choose User Image</h4>
+                            <input type="file" name="Image" onchange="document.
+        getElementById('output').src = window.URL.createObjectURL(this.files[0])" />
+                            @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
+                            <br />
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <br />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                        <div class="col-md-10">
+
+                            <a onclick="window.history.back();" class="btn btn-danger">Cancel</a>
+                            <input type="submit" class="btn btn-primary" value="Update" />
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+        </div>
+    </div>
+</div>
+

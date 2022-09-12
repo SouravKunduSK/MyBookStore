@@ -1,0 +1,73 @@
+﻿@model List<MyBookStore.Models.Book>
+
+@{
+    ViewBag.Title = "Completed";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Completed Books</li>
+
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-check-square"></i>
+            Completed Books Details
+
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-condensed table-hover table-bordered table-striped table" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+
+                            <th>Serial No.</th>
+                            <th>Picture</th>
+                            <th>Book Name</th>
+                            <th>Author Name</th>
+                            <th>Category</th>
+                            <th>Reading Status</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            //int count = 1;
+                            <tr>
+                                <td>@(Model.IndexOf(item)+1)</td>
+                                <td><img src="@Url.Content(item.Photo)" style="width:100px; height:67px;" /></td>
+                                <td>@item.BookName</td>
+                                <td>@item.Author.AuthorName</td>
+                                <td>@item.Category.CategoryName</td>
+
+                                <td>@item.Reading.ReadingStatus</td>
+
+                                <td>@item.StartDate.GetValueOrDefault().ToLongDateString()</td>
+
+                                <td>@item.EndDate.GetValueOrDefault().ToLongDateString()</td>
+
+
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,103 @@
+﻿@model MyBookStore.Models.Book
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item ">Unread Books</li>
+        <li class="breadcrumb-item active">Edit Unread Books</li>
+
+
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-book"></i>
+            Edit Unread Books Details
+
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Edit", "RunBook", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(m => m.BookId)
+                @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.Photo)
+                @Html.HiddenFor(m => m.BookName)
+                @Html.HiddenFor(m => m.AuthorId)
+                @Html.HiddenFor(m => m.CategoryId)
+                @Html.HiddenFor(m => m.BuyingDate)
+                @Html.HiddenFor(m => m.BookStatusId)
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <span style="color:orangered">Change Reading Status...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @if (ViewBag.ReadList != null)
+                        {
+                            <div class="col-md-10">
+                                <h6>Reading Status<span style="color: orangered">*</span></h6>
+                                @Html.DropDownListFor(model => model.ReadingId, ViewBag.ReadList as SelectList, "-- Select Status ---", new { @class = "form-control" })
+                            </div>
+                        }
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <h6>Starting Date<span style="color: orangered">*</span></h6>
+
+                            <input class="form-control" asp-for="StartDate" type="date" name="StartDate" />
+                            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <a onclick="window.history.back();" class="btn btn-danger">Cancel</a>
+                            <input type="submit" class="btn btn-outline-primary" value="Update" />
+                        </div>
+                    </div>
+                </div>
+
+
+                @section scripts{
+                    <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+                    <script>
+                        $(document).ready(function () {
+                            $(".datepicker").datepicker({
+                                dateFormat: "dd-mm-yy",
+                                changeMonth: true,
+                                changeYear: true,
+                                /*yearRange: "-10:+10",*/
+
+                                minDate: new Date(2020, 00, 01)
+                            });
+                        });
+                    </script>
+                }
+
+            }
+        </div>
+    </div>
+</div>

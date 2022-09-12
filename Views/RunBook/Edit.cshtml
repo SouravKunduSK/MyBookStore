@@ -1,0 +1,139 @@
+﻿@model MyBookStore.Models.Book
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Running Books</a>
+        </li>
+
+        <li class="breadcrumb-item active">Edit Books Detail</li>
+
+
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-book-reader"></i>
+            Edit Running Books Detail
+
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Edit", "RunBook", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(m => m.BookId)
+                @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.Photo)
+                @Html.HiddenFor(m => m.BookName)
+                @Html.HiddenFor(m => m.AuthorId)
+                @Html.HiddenFor(m => m.CategoryId)
+                @Html.HiddenFor(m => m.BookStatusId)
+                @Html.HiddenFor(m => m.BuyingDate)
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        @if (ViewBag.ReadList != null)
+                        {
+                            <div class="col-md-10">
+                                <span style="color: orangered">Change reading status..</span><br />
+                                <h6>Reading Status<span style="color: orangered">*</span></h6>
+                                @Html.DropDownListFor(model => model.ReadingId, ViewBag.ReadList as SelectList, "-- Select Status ---", new { @class = "form-control" })
+                            </div>
+                        }
+                    </div>
+                </div>
+                if (Model.StartDate == null)
+                {
+                    @Html.HiddenFor(m => m.EndDate)
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                <h6>Starting Date<span style="color: orangered">*</span></h6>
+
+                                <input class="form-control" asp-for="StartDate" type="date" name="StartDate" />
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <h6>Starting Date<span style="color: orangered">*</span></h6>
+                            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "datepicker form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>*@
+
+
+                }
+                else
+                {
+                    @Html.HiddenFor(m => m.StartDate)
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                <h6>Finishing Date<span style="color: orangered">*</span></h6>
+
+                                <input class="form-control" asp-for="EndDate" type="date" name="EndDate" />
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                <h6>Finishing Date<span style="color: orangered">*</span></h6>
+                                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "datepicker form-control", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>*@
+
+
+                }
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <a onclick="window.history.back();" class="btn btn-outline-danger">Cancel</a>
+                            <input type="submit" class="btn btn-outline-primary" value="Update" />
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true,
+            /*yearRange: "-10:+10",*/
+
+            minDate: new Date(2020, 00, 01)
+        });
+    });
+</script>
+}

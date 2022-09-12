@@ -1,0 +1,131 @@
+﻿@model MyBookStore.Models.Book
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item ">Lended Books</li>
+        <li class="breadcrumb-item active">Edit Lended Books</li>
+
+
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-parachute-box"></i>
+            Edit Lended Books Details
+
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Edit", "Lend", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(m => m.BookId)
+                @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.Photo)
+                @Html.HiddenFor(m => m.AuthorId)
+                @Html.HiddenFor(m => m.CategoryId)
+                @Html.HiddenFor(m => m.BuyingDate)
+                @Html.HiddenFor(m => m.ReadingId)
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <span style="color:orangered">Change Lend Status...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @if (ViewBag.SatList != null)
+                        {
+                            <div class="col-md-10">
+                                <h6>Lend Status<span style="color: orangered">*</span></h6>
+                                @Html.DropDownListFor(model => model.BookStatusId, ViewBag.SatList as SelectList, "-- Select Status ---", new { @class = "form-control" })
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <h6>Book Name<span style="color: orangered">*</span></h6>
+                            @Html.EditorFor(model => model.BookName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <h6>Borrower Name<span style="color: orangered">*</span></h6>
+                            @Html.EditorFor(model => model.BorrowerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Borrower Name", required = "required", autofocus = "autofocus" } })
+                            @Html.ValidationMessageFor(model => model.BorrowerName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <h6>Lending Date<span style="color: orangered">*</span></h6>
+
+                            <input class="form-control" asp-for="BorrowDate" type="date" name="BorrowDate" />
+                            @Html.ValidationMessageFor(model => model.BorrowDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-md-6">
+                <div class="form-group">
+
+                    <div class="col-md-10">
+                        <h6>Lending Date<span style="color: orangered">*</span></h6>
+                        @Html.EditorFor(model => model.BorrowDate, new { htmlAttributes = new { @class = "datepicker form-control", @autocomplete = "off", placeholder = "Enter Date", required = "required", autofocus = "autofocus" } })
+                        @Html.ValidationMessageFor(model => model.BorrowDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                        <div class="col-md-10">
+
+                            <a onclick="window.history.back();" class="btn btn-outline-danger">Cancel</a>
+                            <input type="submit" class="btn btn-outline-primary" value="Update" />
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "dd-mm-yy",
+                changeMonth: true,
+                changeYear: true,
+                /*yearRange: "-10:+10",*/
+
+                minDate: new Date(2020, 00, 01)
+            });
+        });
+    </script>
+}

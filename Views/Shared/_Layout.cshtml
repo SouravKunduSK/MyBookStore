@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>My Book Store</title>
+    <!-- Bootstrap core CSS-->
+
+    <link href="~/Style/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <!-- Custom fonts for this template-->
+    <link href="~/Style/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="~/Style/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="~/Style/css/sb-admin.css" rel="stylesheet">
+    <!--Datetime picker-->
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <!--Searchable Dropdown-->
+    <link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />
+
+
+</head>
+
+<body id="page-top">
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+        <a class="navbar-brand mr-1" href="@(Session["username"] != null ? Url.Action("Index", "Home") : Url.Action("Login", "Account"))" type="button">My Book Store</a>
+        <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Navbar Search -->
+        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- Navbar -->
+        @if (User.Identity.IsAuthenticated)
+        {
+            <ul class="navbar-nav ml-auto ml-md-0">
+
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle fa-fw"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">User Name: @Session["username"] </a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Account", new { id = (int)Session["uid"]})" type="button">My Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout","Account")" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        }
+    </nav>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="sidebar navbar-nav">
+
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="@(Url.Action("Login", "Account"))" type="button">
+                        <i class="fas fa-fw fa-user-alt"></i>
+                        <span>Log In</span>
+                    </a>
+                </li>
+            }
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="@(Url.Action("Index", "Home"))" type="button">
+                        <i class="fas fa-fw fa-desktop"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="@(Url.Action("Index", "Book"))" type="button">
+                        <i class="fas fa-fw fa-book-open"></i>
+                        <span>All Books</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="@(Url.Action("Index", "RunBook"))" type="button">
+                        <i class="fas fa-fw fa-book-reader "></i>
+                        <span>Running Books</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="@(Url.Action("Completed", "Book"))" type="button">
+                        <i class="fas fa-fw fa-check-square"></i>
+                        <span>Completed Books</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="@(Url.Action("Index", "UnBook"))" type="button">
+                        <i class="fas fa-fw fa-book "></i>
+                        <span>Unread Books</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="@(Url.Action("Index", "Lend"))" type="button">
+                        <i class="fas fa-fw fa-parachute-box "></i>
+                        <span>Lended Books</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@(Url.Action("Index", "BuyBook"))" type="button">
+                        <i class="fas fa-fw fa-gift "></i>
+                        <span>Buyable Books</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@(Url.Action("Index", "Category"))" type="button">
+                        <i class="fas fa-fw fa-clipboard-list "></i>
+                        <span>Categories</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="@(Url.Action("Index", "Author"))" type="button">
+                        <i class="fas fa-fw fa-pen "></i>
+                        <span>Authors</span>
+                    </a>
+                </li>
+            }
+
+
+        </ul>
+
+        <div id="content-wrapper">
+
+            <!-- Icon Cards-->
+            @RenderBody()
+
+
+
+
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        Copyright ©
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved  by Sourav Kundu <i class="icon-heart color-danger" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-warning" href="@Url.Action("Logout","Account")">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Style/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Style/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="~/Style/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="~/Style/vendor/chart.js/Chart.min.js"></script>
+    <script src="~/Style/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="~/Style/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="~/Style/js/sb-admin.min.js"></script>
+    <!-- Demo scripts for this page-->
+    <script src="~/Style/js/demo/datatables-demo.js"></script>
+    <script src="~/Style/js/demo/chart-area-demo.js"></script>
+    <!--Searchable Dropdown-->
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    @*@section scripts{
+            <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $(".datepicker").datepicker({
+                        dateFormat: "dd-mm-yy",
+                        changeMonth: true,
+                        changeYear: true,
+                        /*yearRange: "-10:+10",*/
+                        showOn: "both",
+                        buttonText: "<i class='fa fa-calendar'></i>",
+                        minDate: new Date(2020, 00, 01)
+                    });
+                });
+            </script>
+        }*@
+
+    @section scripts{
+           
+            <script>
+                $(function () {
+                    $(".dropid").chosen({
+                        disable_search_threshold: 5
+                    });
+                });
+            </script>
+        }
+
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>
+
+
